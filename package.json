@@ -15,7 +15,7 @@
   "type": "commonjs",
   "main": "scripts.js",
   "scripts": {
-    "preinstall": "npm run build",
+    "predeploy": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "type":"module",
