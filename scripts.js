@@ -1,4 +1,4 @@
-import { findStuff } from "./module/finder_script.js";
+import { findStuff, findStuff_variant } from "./module/finder_script.js";
 import * as pm from "./module/product_manager.js";
 
 var map = L.map('map').setView([0, 0], 1);
@@ -15,15 +15,16 @@ const search = document.getElementById("product-search");
 const json_url = document.getElementById("database-json-url");
 const current_location = document.getElementById("set-current-location");
 const default_search_text = "Searching for: ";
-const save_as_json_button = document.getElementById("save-as-json")
-const unload_json = document.getElementById("unload-json")
-const load_json_file = document.getElementById("load-json-file")
+const save_as_json_button = document.getElementById("save-as-json");
+const unload_json = document.getElementById("unload-json");
+const load_json_file = document.getElementById("load-json-file");
+const print_products = document.getElementById("print-products");
 
 let markers = L.markerClusterGroup();
 
 search.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
-        clearMarkers()
+        clearMarkers();
 
         if (search.value == "") {
             heading.textContent = default_search_text;
@@ -31,27 +32,32 @@ search.addEventListener("keydown", (event) => {
         }
 
         heading.textContent = default_search_text + search.value;
-        loadProductsBySearch(search.value);
+        loadProductsBySearch_variant(search.value);
     }
 });
 
 json_url.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
-        clearMarkers()
+        clearMarkers();
 
-        if ( json_url.value == "" ) {
-            products = {}
-            return
+        if (json_url.value == "") {
+            products = {};
+            return;
         }
 
-        pm.loadJsonUrl(json_url.value, products)
+        pm.loadJsonUrl(json_url.value, products);
     }
 });
 
-current_location.addEventListener("click", setToCurrentLocation)
-save_as_json_button.addEventListener("click", saveDatabaseAsJSON.bind(null, "database_json"))
+current_location.addEventListener("click", setToCurrentLocation);
+save_as_json_button.addEventListener("click", saveDatabaseAsJSON.bind(null, "database_json"));
 unload_json.addEventListener("click", unloadData);
 load_json_file.addEventListener("change", handleFileSelection);
+print_products.addEventListener("click", _on_print_products);
+
+function _on_print_products() {
+    console.log(findStuff_exp("pri"));
+}
 
 function handleFileSelection(event) {
     const file = event.target.files[0];
@@ -69,8 +75,7 @@ function handleFileSelection(event) {
     const reader = new FileReader();
     reader.onload = () => {
         products = JSON.parse(reader.result);
-        console.log(reader.result);
-    }
+    };
     reader.onerror = () => {
         showToast("Error reading the file. Please try again.", "error");
     };
@@ -121,6 +126,14 @@ function loadProductsBySearch(name_of_product) {
     }
 }
 
+function loadProductsBySearch_variant(name_of_product) {
+    let found = findStuff_variant(products, name_of_product);
+
+    for (let k of found) {
+        loadProductsByVariant(k);
+    }
+}
+
 function loadProductsByKey(name_of_product) {
     let variants = products[name_of_product].variants;
 
@@ -129,6 +142,11 @@ function loadProductsByKey(name_of_product) {
         createProductMarker(variant.location, variant);
     }
 }
+
+function loadProductsByVariant(variant) {
+    createProductMarker(variant.location, variant);
+}
+
 
 function _getProductsVariantByKey(name) {
     let key = products[name];
@@ -151,20 +169,20 @@ function clearMarkers() {
 }
 
 function saveDatabaseAsJSON(filename) {
-    const jsonString = JSON.stringify(products, null, 2)
+    const jsonString = JSON.stringify(products, null, 2);
 
     const blob = new Blob([jsonString], { type: 'application/json' });
-  
+
     // Create a download link
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
     a.download = filename || 'data.json';
-    
+
     // Trigger the download
     document.body.appendChild(a);
     a.click();
-    
+
     // Clean up
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
@@ -173,22 +191,21 @@ function saveDatabaseAsJSON(filename) {
 function setToCurrentLocation() {
     if (!"geolocation" in navigator) {
         console.log("Geolocation is not supported by this browser.");
-        return
+        return;
     }
     navigator.geolocation.getCurrentPosition(
         (position) => {
-        // Success callback
-        console.log("Latitude:", position.coords.latitude);
-        console.log("Longitude:", position.coords.longitude);
-        map.setView([position.coords.latitude, position.coords.longitude], 15)
+            // Success callback
+            console.log("Latitude:", position.coords.latitude);
+            console.log("Longitude:", position.coords.longitude);
+            map.setView([position.coords.latitude, position.coords.longitude], 15);
         },
         (error) => {
-        // Error callback
-        console.error("Error getting location:", error.message);
+            // Error callback
+            console.error("Error getting location:", error.message);
         },
         {
             enableHighAccuracy: true
         }
     );
-  }
-  
+}

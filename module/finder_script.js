@@ -16,6 +16,20 @@ export function findStuff(obj, term) {
   return final_results;
 }
 
+export function findStuff_variant(obj, term) {
+  let variantsNamesFound = findVariantsName_exp(obj, term);
+  let variantsAliasFound = findVariantsAlias_exp(obj, term);
+  let all = [];
+  
+  _addValues(variantsNamesFound, all);
+  _addValues(variantsAliasFound, all);
+
+  let final_results = new Set(all);
+
+  return final_results;
+}
+
+
 export function findAllKeys(obj, searchTerm) {
   return Object.keys(obj).filter(key =>
     key.toLowerCase().includes(searchTerm.toLowerCase())
@@ -23,7 +37,7 @@ export function findAllKeys(obj, searchTerm) {
 }
 
 export function nameInString(string, name) {
-  return string.includes(name);
+  return string.toLowerCase().includes(name.toLowerCase());
 }
 
 function findAlias(obj, term) {
@@ -51,14 +65,11 @@ function findVariantsAlias(obj, term) {
       let variant = obj[k].variants[m];
       
       for (let p of variant.productAlias) {
-        //console.log(p);
-        //console.log(term);
         if (found.includes(k)) {
           continue;
         }
         
         if (p.includes(term)) {
-          //console.log("it does");
           found.push(k);
         }
 
@@ -89,6 +100,50 @@ function findVariantsName(obj, term) {
   return found;
 }
 
+function findVariantsName_exp(obj, term) {
+  let found = [];
+
+  for (let k in obj) {
+    for (let m in obj[k].variants) {
+      let variant = obj[k].variants[m];
+
+      if (found.includes(variant)) {
+        continue;
+      }
+
+      if (nameInString(variant.productName, term)) {
+        found.push(variant);
+      }
+    }
+  }
+
+  return found;
+}
+
+function findVariantsAlias_exp(obj, term) {
+  let found = [];
+
+  for (let k in obj) {
+    for (let m in obj[k].variants) {
+      let variant = obj[k].variants[m];
+      
+      for (let p of variant.productAlias) {
+        if (found.includes(variant)) {
+          continue;
+        }
+        
+        if (nameInString(p, term)) {
+          found.push(variant);
+        }
+
+      }
+
+      
+    }
+  }
+  return found;
+}
+
 function _addValues(array, to_array) {
   let new_array = to_array;
 
@@ -97,15 +152,4 @@ function _addValues(array, to_array) {
   }
 
   return new_array;
-}
-
-function test(obj, term) {
-  let keysFound = findAllKeys(obj, term);
-  //let thing = findAlias(obj, term);
-  let variantsNamesFound = findVariantsName(obj, term);
-  let variantsAliasFound = findVariantsAlias(obj, term);
-  //let all = [];
-
-  return variantsNamesFound;
-
 }
