@@ -1,0 +1,25 @@
+{
+  "name": "buyclose2home",
+  "version": "0.0.1",
+  "description": "A project that looks for nearby products in your location using a database file as reference",
+  "homepage": "https://github.com/Lukaswbrr/buyclose2home#readme",
+  "bugs": {
+    "url": "https://github.com/Lukaswbrr/buyclose2home/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lukaswbrr/buyclose2home.git"
+  },
+  "license": "ISC",
+  "author": "lukaswbrr",
+  "type": "commonjs",
+  "main": "scripts.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type":"module",
+  "dependencies": {
+    "better-sqlite3": "^11.9.1",
+    "leaflet.markercluster": "^1.5.3"
+  }
+}

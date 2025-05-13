@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Maker Page</title>
+    <link rel="stylesheet" href="json_maker_style.css">
+</head>
+<body>
+    <h1>JSON Maker for BuyClose2Home</h1>
+    <p>This page is for making JSONs for usage of the BuyClose2Home program.</p>
+    <p>First, here's some explanation:</p>
+    <ul>
+        <li>Add Product Default: Adds a product with a main primary key. (Example: computer)</li>
+        <li>Add Product Variation: Adds a product within a main primary key. Example: The computer main primary key has tons of variations. Like a gaming computer, a dell computer, etc</li>
+    </ul>
+    <p>Now, how to use it:</p>
+    <p>For images, it's recommended that you upload the images to a file management website. I recommend File Garden or Google Drive for uploading images. Remember to mark the file as Unlisted or a way that it's possible to access the image via URL.</p>
+    <p>Reminder that this is a barebones JSON Maker. Once you create a JSON through this, i recommend editing it with a proper JSON editor. This is mainly for getting templates ready.</p>
+    <pre id="json-dict-text">{EMPTY}</pre>
+    <table></table>
+    <button class="inline-button" id="add-product-main">Add product main key</button>
+    <button class="inline-button" id="add-product-variation">Add product variation</button>
+    <button class="inline-button" id="save-json-file">Save JSON as file</button>
+    <input type="file" name="json-file" id="json-file">
+    <button>Load JSON file</button>
+    <button class="inline-button" id="load-json-url">Load JSON via URL</button>
+    <button class="inline-button" id="clear-json-data">Clear JSON data</button>
+    <button class="inline-button" id="print-location">Print current location</button>
+    <p id="location-result"></p>
+    <script type="module" src="json_maker_scripts.js"></script>
+</body>
+</html>
