@@ -1,15 +1,3 @@
-const nestedProducts = {
-  "product1": { name: "Principal", details: { desc: "A principal item" } },
-  "product2": { name: "Example", details: { desc: "No match" } },
-};
-
-const nestedStuff = {
-  "product1": { name: "hello", alias: ["my man", "yembom"] },
-  "product2": { name: "world", alias: ["erghh", "yeah"], variants: [{ productName: "sigma", productAlias: ["oh yoo", "hmm"] }, {productName: "sigma", productAlias: ["oh yeeah my", "hmnng"] }] }
-};
-
-
-
 export function findStuff(obj, term) {
   let keysFound = findAllKeys(obj, term);
   let aliasFound = findAlias(obj, term);
