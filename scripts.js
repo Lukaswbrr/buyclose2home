@@ -51,7 +51,7 @@ json_url.addEventListener("keydown", (event) => {
 current_location.addEventListener("click", setToCurrentLocation)
 save_as_json_button.addEventListener("click", saveDatabaseAsJSON.bind(null, "database_json"))
 unload_json.addEventListener("click", unloadData);
-load_json_file.addEventListener("changed", handleFileSelection);
+load_json_file.addEventListener("change", handleFileSelection);
 
 function handleFileSelection(event) {
     const file = event.target.files[0];
@@ -69,6 +69,7 @@ function handleFileSelection(event) {
     const reader = new FileReader();
     reader.onload = () => {
         products = JSON.parse(reader.result);
+        console.log(reader.result);
     }
     reader.onerror = () => {
         showToast("Error reading the file. Please try again.", "error");
