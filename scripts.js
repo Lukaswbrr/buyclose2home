@@ -17,6 +17,9 @@ const current_location = document.getElementById("set-current-location");
 const default_search_text = "Searching for: ";
 const save_as_json_button = document.getElementById("save-as-json")
 const unload_json = document.getElementById("unload-json")
+const load_json_file = document.getElementById("load-json-file")
+
+let markers = L.markerClusterGroup();
 
 search.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
@@ -48,13 +51,37 @@ json_url.addEventListener("keydown", (event) => {
 current_location.addEventListener("click", setToCurrentLocation)
 save_as_json_button.addEventListener("click", saveDatabaseAsJSON.bind(null, "database_json"))
 unload_json.addEventListener("click", unloadData);
+load_json_file.addEventListener("changed", handleFileSelection);
+
+function handleFileSelection(event) {
+    const file = event.target.files[0];
+
+    if (!file) {
+        showToast("No file selected. Please choose a file.", "error");
+        return;
+    }
+
+    if (file.type == "text/json") {
+        showToast('Load JSON File error: Not a valid JSON file.', 'failed');
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+        products = JSON.parse(reader.result);
+    }
+    reader.onerror = () => {
+        showToast("Error reading the file. Please try again.", "error");
+    };
+
+    reader.readAsText(file);
+
+}
 
 function unloadData() {
     clearMarkers();
     products = {};
 }
-
-let markers = L.markerClusterGroup();
 
 function setProductLocation(name, location) {
     return;

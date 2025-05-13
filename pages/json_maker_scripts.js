@@ -12,8 +12,7 @@ const print_location = document.getElementById("print-location");
 const current_location = document.getElementById("location-result");
 const clear_json = document.getElementById("clear-json-data");
 const json_file = document.getElementById("json-file");
-// TODO:
-// Add a warning in case the user clicks on clear JSON data
+
 
 add_product_main.addEventListener("click", _on_click_add_product_main);
 add_product_variation.addEventListener("click", _on_click_add_product_variation);
@@ -25,7 +24,6 @@ load_json_url.addEventListener("click", _on_load_json_url);
 
 function handleFileSelection(event) {
     const file = event.target.files[0];
-    console.log("aaa");
 
     if (!file) {
         showToast("No file selected. Please choose a file.", "error");

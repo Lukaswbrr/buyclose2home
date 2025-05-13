@@ -109,4 +109,3 @@ function test(obj, term) {
   return variantsNamesFound;
 
 }
-console.log(findStuff(nestedStuff, "yembom"));
