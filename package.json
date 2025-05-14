@@ -1,8 +1,8 @@
 {
+  "homepage": "https://github.com/Lukaswbrr/buyclose2home",
   "name": "buyclose2home",
   "version": "0.0.1",
   "description": "A project that looks for nearby products in your location using a database file as reference",
-  "homepage": "https://github.com/Lukaswbrr/buyclose2home#readme",
   "bugs": {
     "url": "https://github.com/Lukaswbrr/buyclose2home/issues"
   },
@@ -12,14 +12,16 @@
   },
   "license": "ISC",
   "author": "lukaswbrr",
-  "type": "commonjs",
+  "type": "module",
   "main": "scripts.js",
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "type":"module",
   "dependencies": {
     "better-sqlite3": "^11.9.1",
+    "gh-pages": "^6.3.0",
     "leaflet.markercluster": "^1.5.3"
   }
 }
