@@ -18,8 +18,12 @@ const default_search_text = "Searching for: ";
 const save_as_json_button = document.getElementById("save-as-json");
 const unload_json = document.getElementById("unload-json");
 const load_json_file = document.getElementById("load-json-file");
-const print_products = document.getElementById("print-products");
+const price_minimum_element = document.getElementById("price-minimum")
+const price_maximum_element = document.getElementById("price-maximum")
 
+
+let price_minimum = 3
+let price_maximum = 900
 let markers = L.markerClusterGroup();
 
 search.addEventListener("keydown", (event) => {
@@ -53,7 +57,6 @@ current_location.addEventListener("click", setToCurrentLocation);
 save_as_json_button.addEventListener("click", saveDatabaseAsJSON.bind(null, "database_json"));
 unload_json.addEventListener("click", unloadData);
 load_json_file.addEventListener("change", handleFileSelection);
-print_products.addEventListener("click", _on_print_products);
 
 function _on_print_products() {
     console.log(findStuff_exp("pri"));
@@ -126,8 +129,17 @@ function loadProductsBySearch(name_of_product) {
     }
 }
 
-function loadProductsBySearch_variant(name_of_product) {
+function loadProductsBySearch_variant(name_of_product, filterPrice = true) {
     let found = findStuff_variant(products, name_of_product);
+    let found_array = Array.from(found)
+    let filtered = found_array.filter((product) => product.price > price_minimum && product.price < price_maximum )
+    
+    if (filterPrice) {
+        for (let k of filtered) {
+            loadProductsByVariant(k);
+        }
+        return
+    }
 
     for (let k of found) {
         loadProductsByVariant(k);
