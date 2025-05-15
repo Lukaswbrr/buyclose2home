@@ -61,24 +61,24 @@ price_minimum_element.addEventListener("input", (event) => {
     
 })
 
-json_url.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-        clearMarkers();
+json_url.addEventListener("change", (event) => {
+    
+    clearMarkers();
 
-        if (json_url.value == "") {
-            products = {};
-            return;
-        }
-
-        let testthing = {}; 
-        pm.loadJsonUrl(json_url.value, testthing)
-        .then((json) => {
-            products = json;
-        })
-        .catch((error) => {
-            console.log(error);
-        });;
+    if (json_url.value == "") {
+        products = {};
+        return;
     }
+
+    let testthing = {}; 
+    pm.loadJsonUrl(json_url.value, testthing)
+    .then((json) => {
+        products = json;
+    })
+    .catch((error) => {
+        console.log(error);
+    });;
+    
 });
 
 current_location.addEventListener("click", setToCurrentLocation);
