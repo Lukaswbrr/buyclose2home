@@ -21,9 +21,8 @@ const load_json_file = document.getElementById("load-json-file");
 const price_minimum_element = document.getElementById("price-minimum")
 const price_maximum_element = document.getElementById("price-maximum")
 
-
-let price_minimum = 3
-let price_maximum = 900
+let price_minimum = 0
+let price_maximum = 0
 let markers = L.markerClusterGroup();
 
 search.addEventListener("keydown", (event) => {
@@ -40,6 +39,28 @@ search.addEventListener("keydown", (event) => {
     }
 });
 
+price_maximum_element.addEventListener("input", (event) => {
+    
+    price_maximum = price_maximum_element.value;
+
+    if (!search.value == "") {
+        clearMarkers();
+        loadProductsBySearch_variant(search.value)
+    }
+    
+})
+
+price_minimum_element.addEventListener("input", (event) => {
+    
+    price_minimum = price_minimum_element.value;
+
+    if (!search.value == "") {
+        clearMarkers();
+        loadProductsBySearch_variant(search.value)
+    }
+    
+})
+
 json_url.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
         clearMarkers();
@@ -49,7 +70,14 @@ json_url.addEventListener("keydown", (event) => {
             return;
         }
 
-        pm.loadJsonUrl(json_url.value, products);
+        let testthing = {}; 
+        pm.loadJsonUrl(json_url.value, testthing)
+        .then((json) => {
+            products = json;
+        })
+        .catch((error) => {
+            console.log(error);
+        });;
     }
 });
 
@@ -57,10 +85,6 @@ current_location.addEventListener("click", setToCurrentLocation);
 save_as_json_button.addEventListener("click", saveDatabaseAsJSON.bind(null, "database_json"));
 unload_json.addEventListener("click", unloadData);
 load_json_file.addEventListener("change", handleFileSelection);
-
-function _on_print_products() {
-    console.log(findStuff_exp("pri"));
-}
 
 function handleFileSelection(event) {
     const file = event.target.files[0];
@@ -88,6 +112,7 @@ function handleFileSelection(event) {
 }
 
 function unloadData() {
+    console.log("cleared data!")
     clearMarkers();
     products = {};
 }
@@ -132,10 +157,20 @@ function loadProductsBySearch(name_of_product) {
 function loadProductsBySearch_variant(name_of_product, filterPrice = true) {
     let found = findStuff_variant(products, name_of_product);
     let found_array = Array.from(found)
-    let filtered = found_array.filter((product) => product.price > price_minimum && product.price < price_maximum )
+    let result
+
+    if ( ( price_minimum == 0 && price_maximum == 0) ) {
+        result = found_array
+    } else if ( price_maximum == 0 ) {
+        result = found_array.filter((product) => product.price >= price_minimum )
+    } else if ( price_minimum == 0 ) {
+        result = found_array.filter((product) => product.price <= price_maximum )
+    } else {
+        result = found_array.filter((product) => product.price >= price_minimum && product.price <= price_maximum )
+    }
     
     if (filterPrice) {
-        for (let k of filtered) {
+        for (let k of result) {
             loadProductsByVariant(k);
         }
         return

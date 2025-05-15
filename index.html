@@ -17,8 +17,8 @@
     <p>A tool that looks for products locally using a JSON database.</p>
     <input type="search" name="product-search" id="product-search" placeholder="Name of the product">    
     <input type="url" name="database-json-url" id="database-json-url" placeholder="URL of the JSON file">    
-    <input type="number" name="price-minimum" id="price-minimum" placeholder="Minimum price">
-    <input type="number" name="price-maximum" id="price-maximum" placeholder="Maximum price">
+    <input type="number" name="price-minimum" id="price-minimum" placeholder="Minimum price" min="0" value="0">
+    <input type="number" name="price-maximum" id="price-maximum" placeholder="Maximum price" min="0" value="0">
     <h3 id="searching-for">Searching for: </h3>
     <button id="set-current-location">Set to current location</button>
     <button id="save-as-json">Save current database to json</button>
