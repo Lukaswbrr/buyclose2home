@@ -119,12 +119,12 @@ function _on_click_add_product_variation() {
         return;
     }
 
-    let storeName = _prompt_text("Type the product variation type name", "user cancelled");
+    let storeName = _prompt_text("Type the store name", "user cancelled");
     if (storeName == null || storeName == "") {
         return;
     }
 
-    let priceValue = _prompt_float("Type the product variation type aliases", "user cancelled");
+    let priceValue = _prompt_float("Type the price", "user cancelled");
     if (priceValue == null || priceValue == "") {
         return;
     }
@@ -259,14 +259,14 @@ function _prompt_int_array(prompt_int, cancel_name) {
         return;
     }
 
-    let split = key.split(",");
+    let split = number.split(",");
     let result = [];
     split.forEach((element) => {
         element = parseInt(element);
         result.push(element);
     });
 
-    return parseInt(number);
+    return result;
 }
 
 function _prompt_float(prompt_float, cancel_name) {
@@ -277,7 +277,7 @@ function _prompt_float(prompt_float, cancel_name) {
         return;
     }
 
-    return parseInt(number);
+    return parseFloat(number);
 }
 
 function _prompt_float_array(prompt_float, cancel_name) {
@@ -288,14 +288,14 @@ function _prompt_float_array(prompt_float, cancel_name) {
         return;
     }
 
-    let split = key.split(",");
+    let split = number.split(",");
     let result = [];
     split.forEach((element) => {
         element = parseInt(element);
         result.push(element);
     });
 
-    return parseInt(number);
+    return result;
 }
 
 function getCurrentLocation() {
