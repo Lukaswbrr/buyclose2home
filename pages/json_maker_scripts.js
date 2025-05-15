@@ -241,7 +241,7 @@ function _prompt_text_array(prompt_name, cancel_name) {
 }
 
 function _prompt_int(prompt_int, cancel_name) {
-    let number = prompt_int;
+    let number = prompt(prompt_int, "0");
 
     if (number == null || number == "") {
         console.log(cancel_name);
@@ -252,7 +252,7 @@ function _prompt_int(prompt_int, cancel_name) {
 }
 
 function _prompt_int_array(prompt_int, cancel_name) {
-    let number = prompt_int;
+    let number = prompt(prompt_int, "0");
 
     if (number == null || number == "") {
         console.log(cancel_name);
@@ -270,7 +270,7 @@ function _prompt_int_array(prompt_int, cancel_name) {
 }
 
 function _prompt_float(prompt_float, cancel_name) {
-    let number = prompt_float;
+    let number = prompt(prompt_float, 0);
 
     if (number == null || number == "") {
         console.log(cancel_name);
@@ -281,7 +281,7 @@ function _prompt_float(prompt_float, cancel_name) {
 }
 
 function _prompt_float_array(prompt_float, cancel_name) {
-    let number = prompt_float;
+    let number = prompt(prompt_float, 0);
 
     if (number == null || number == "") {
         console.log(cancel_name);
