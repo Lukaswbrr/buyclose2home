@@ -10,3 +10,7 @@ If you know any ways in how i can add the node modules to the github pages, with
 repository, create a issue with the steps in how to do so or create a pull request.
 
 Reminder that i also temporarily removed dist from .gitignore.
+
+If you are going to contribute to this project, even though i don't know how to handle with the fact
+that the node_modules folder ins't in the github pages server, then in the index.html file, change
+every reference to github-pages folder and change it to node_modules.
