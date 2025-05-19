@@ -3,6 +3,22 @@
     width: 1000px;
 }
 
+/* Adjust for tablets */
+@media (max-width: 768px) {
+    #map {
+        width: 600px;
+        height: 450px;
+    }
+}
+
+/* Adjust for phones */
+@media (max-width: 480px) {
+    #map {
+        width: 100%;  /* Full width of container */
+        height: 300px; /* Reduced height */
+    }
+}
+
 .inline {
     display: block;
 }
