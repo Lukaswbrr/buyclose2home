@@ -291,7 +291,7 @@ function _prompt_float_array(prompt_float, cancel_name) {
     let split = number.split(",");
     let result = [];
     split.forEach((element) => {
-        element = parseInt(element);
+        element = parseFloat(element);
         result.push(element);
     });
 
